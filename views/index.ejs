@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<main class="container">
+  <section class="hero">
+    <h1>Katalog Menu Soto & Minuman</h1>
+    <p>Pilih kategori menu favorit Anda menggunakan filter di bawah ini.</p>
+    
+    <!-- Form Filter menggunakan HTTP GET (Query Parameter) -->
+    <form action="/" method="GET" class="filter-form">
+      <label for="kategori">Filter Kategori:</label>
+      <select name="kategori" id="kategori" onchange="this.form.submit()">
+        <option value="semua" <%= selectedKategori === 'semua' ? 'selected' : '' %>>Semua Menu</option>
+        <option value="makanan" <%= selectedKategori === 'makanan' ? 'selected' : '' %>>Makanan</option>
+        <option value="minuman" <%= selectedKategori === 'minuman' ? 'selected' : '' %>>Minuman</option>
+      </select>
+    </form>
+  </section>
+
+  <section class="menu-grid">
+    <% if (menuList.length > 0) { %>
+      <% menuList.forEach(item => { %>
+        <div class="card">
+          <img src="<%= item.foto %>" alt="<%= item.nama %>">
+          <div class="card-body">
+            <span class="badge"><%= item.kategori %></span>
+            <h3><%= item.nama %></h3>
+            <p class="harga">Rp <%= item.harga.toLocaleString('id-ID') %></p>
+            <a href="/menu/<%= item.id %>" class="btn">Lihat Detail</a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p class="empty-msg">Tidak ada menu untuk kategori ini.</p>
+    <% } %>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
